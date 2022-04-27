@@ -12,6 +12,25 @@ Grades are cached in the server for up to 5 hours to speed up performance and ap
 ### GET /grades
 `https://cfisd-api.glitch.me/api/grades?username=<username>&password=<password>`
 
+Sample Cache Response:
+
+```js
+{
+  "success":true,
+  "update":false,
+  "data": [
+    {"grade":"99 ","course":"English I"},
+    {"grade":"99 ","course":"Geometry"},
+    {"grade":"99 ","course":"BAND II"},
+    {"grade":"99","course":"COMP SCI I"},
+    {"grade":"99 ","course":"Spanish I"},
+    {"grade":"99 ","course":"PACE"},
+    {"grade":"99 ","course":"BIOLOGY"}
+  ],
+  "age":1698236
+}
+```
+
 Get the grades for specified user. Incorrect login credentials will supply an error.
 
 ## Disclaimer

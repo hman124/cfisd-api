@@ -1,0 +1,23 @@
+{
+  "name": "cfisd-api",
+  "version": "1.0.0",
+  "description": "An api to get a users grades, given a username and password.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "puppeteer": "^13.6.0",
+    "express": "^4.17.3",
+    "sqlite3": "^5.0.5"
+  },
+  "engines": {
+    "node": "16.x",
+    "npm": "7.x"
+  },
+  "license": "MIT",
+  "keywords": [
+    "node",
+    "express"
+  ]
+}

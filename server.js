@@ -5,6 +5,10 @@ const app = express();
 const db = require("./database.js");
 const crypto = require("crypto");
 
+const cors = require("cors");
+
+app.use(cors());
+
 function toHash(salt, password) {
   return crypto
     .createHash("sha256")
@@ -147,11 +151,13 @@ app.get("/", (req, res) => {
   res.sendFile(__dirname + "/views/index.html");
 });
 
-app.get("/api/classlink", async (req, res) => {
+app.get("/api/grades", async (req, res) => {
   const { username, password } = req.query;
   const grades = await getGrades(username, password);
   res.json(grades);
-  await updateDatabase(username, password, grades.data);
+  if(grades.success) {
+    await updateDatabase(username, password, grades.data);
+  }
 });
 
 app.listen(process.env.PORT);

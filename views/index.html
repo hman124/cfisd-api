@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>CFISD API (beta)</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      @font-face {
+        src: url(https://cdn.glitch.com/a5478312-40b7-48c2-9f6d-bd228bb9fa96/FiraSans-SemiBoldItalic.otf);
+        font-family: fira;
+      }
+
+      body {
+        font-family: fira, calibri, sans-serif;
+      }
+
+      form {
+        border: 2px #000 solid;
+        padding: 1rem;
+        display: inline-block;
+        border-radius: 10px;
+        text-align: center;
+      }
+
+      form input {
+        display: block;
+        padding: 0.5rem;
+        border-radius: 5px;
+        border: 2px #444 solid;
+        margin-bottom: 1rem;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>CFISD API v1 (beta)</h1>
+    <hr />
+    <form id="login">
+      <h3>Log In to your school account</h3>
+      <input type="text" name="username" placeholder="s000000" required />
+      <input type="password" name="password" placeholder="Password" required />
+      <input type="submit" value="Log In" />
+    </form>
+    <p id="loading" style="display: none">Loading Grades...</p>
+    <script>
+      const login = document.getElementById("login");
+      const loading = document.getElementById("loading");
+
+      login.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const username = event.target.username.value;
+        const password = event.target.password.value;
+
+        event.target.style.display = "none";
+        loading.style.display = "block";
+
+        const params = new URLSearchParams();
+        params.set("username", username);
+        params.set("password", password);
+
+        fetch("/api/classlink?" + params.toString())
+          .then((r) => r.json())
+          .then((response) => {
+            if (response.success) {
+              loading.style.display = "none";
+              var li = response.data
+                .reverse()
+                .reduce((p, c) => `<li>${c.course} - ${c.grade}</li>` + p, "");
+              document.body.innerHTML += `<ol>${li}</ol>`;
+            } else {
+              alert("Error while trying to get grades: " + response.message);
+            }
+          });
+      });
+    </script>
+  </body>
+</html>
